@@ -1,6 +1,3 @@
-import com.sun.javaws.exceptions.InvalidArgumentException;
-
-import javax.swing.text.html.Option;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Optional;
@@ -149,5 +146,4 @@ public class Library {
             return books.stream().map(Book::getID).max(Integer::compare).get() + 1;
         }
     }
-
 }

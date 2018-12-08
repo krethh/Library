@@ -1,8 +1,6 @@
-import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 /**
  * Created by Paweł Kulig on 08.12.2018.
