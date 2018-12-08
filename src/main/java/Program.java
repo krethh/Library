@@ -1,10 +1,12 @@
-/**
- * Created by Paweł Kulig on 08.12.2018.
- */
 public class Program {
 
     public static void main(String[] args) {
-        System.out.print("a");
+        // Library examples
+        Library library = new Library();
+
+        library.addBook(new BookType("Harry Potter", 1999, "J. K. Rowling"));
+
+        library.printAllBooksInformation();
 
     }
 }

@@ -38,14 +38,14 @@ public class Library {
         return new BookActionResult(true, null);
     }
 
-    public BookActionResult lendBook(Book book, LibraryClient lendingPerson) {
-        BookAvailabilityResult result = isBookAvailable(book);
+    public BookActionResult lendBook(Integer ID, LibraryClient lendingPerson) {
+        BookAvailabilityResult result = isBookAvailable(ID);
 
         if (!result.isAvailable()) {
             return new BookActionResult(false, result.getMessage());
         }
 
-        currentLendings.add(new Lending(book, lendingPerson));
+        currentLendings.add(new Lending(result.getBook(), lendingPerson));
 
         return new BookActionResult(true, null);
     }
@@ -57,7 +57,7 @@ public class Library {
             return new BookActionResult(false, result.getMessage());
         }
 
-        books.removeIf(book -> Objects.equals(book.getID(), ID));
+        books.remove(result.getBook());
 
         return new BookActionResult(true, null);
     }
@@ -117,21 +117,20 @@ public class Library {
     }
 
     private BookAvailabilityResult isBookAvailable(Integer bookID) {
-        Optional<Integer> ID = books.stream().filter(other -> Objects.equals(other.getID(), bookID))
-                .map(Book::getID)
+        Optional<Book> book = books.stream().filter(other -> Objects.equals(other.getID(), bookID))
                 .findFirst();
 
-        if (ID == null) {
-            return new BookAvailabilityResult(false, "Book with this ID doesn't exist.");
+        if (!book.isPresent()) {
+            return new BookAvailabilityResult(false, "Book with this ID doesn't exist.", null);
         }
 
         boolean isLent = currentLendings.stream().anyMatch(lending -> Objects.equals(lending.getBook().getID(), bookID));
 
         if (isLent) {
-            return new BookAvailabilityResult(false, "Book with this ID is currently lent");
+            return new BookAvailabilityResult(false, "Book with this ID is currently lent", null);
         }
 
-        return new BookAvailabilityResult(true, null);
+        return new BookAvailabilityResult(true, null, book.get());
     }
 
     private Integer generateNextID() {

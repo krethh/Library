@@ -7,9 +7,12 @@ public class BookAvailabilityResult {
 
     private String message;
 
-    public BookAvailabilityResult(boolean available, String message) {
+    private Book book;
+
+    public BookAvailabilityResult(boolean available, String message, Book book) {
         this.available = available;
         this.message = message;
+        this.book = book;
     }
 
     public boolean isAvailable() {
@@ -18,5 +21,9 @@ public class BookAvailabilityResult {
 
     public String getMessage() {
         return message;
+    }
+
+    public Book getBook() {
+        return book;
     }
 }
