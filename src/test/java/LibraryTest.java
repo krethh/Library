@@ -1,4 +1,8 @@
 import org.junit.Test;
+import pl.kulig.library.BookActionResult;
+import pl.kulig.library.BookType;
+import pl.kulig.library.Library;
+import pl.kulig.library.LibraryClient;
 
 import static org.junit.Assert.assertEquals;
 
