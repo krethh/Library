@@ -106,9 +106,10 @@ public class Library {
         Optional<Lending> lendingOptional = currentLendings.stream().filter(lending -> lending.getBook().getID().equals(ID)).findFirst();
 
         String info =
-                  "Book title: " + book.getBookType().getTitle() + System.lineSeparator()
+                "ID: " + ID + System.lineSeparator()
+                + "Book title: " + book.getBookType().getTitle() + System.lineSeparator()
                 + "Book year: " + book.getBookType().getYear() + System.lineSeparator()
-                + "Book author" + book.getBookType().getAuthor() + System.lineSeparator()
+                + "Book author: " + book.getBookType().getAuthor() + System.lineSeparator()
                 + (lendingOptional.isPresent() ? "Currently lent to: " + lendingOptional.get().getLendingPerson() : "Currently not lent");
 
         System.out.println(info);
