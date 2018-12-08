@@ -1,3 +1,5 @@
+import com.sun.javaws.exceptions.InvalidArgumentException;
+
 import javax.swing.text.html.Option;
 import java.util.HashSet;
 import java.util.Objects;
@@ -45,6 +47,10 @@ public class Library {
             return new BookActionResult(false, result.getMessage());
         }
 
+        if (lendingPerson == null) {
+            return new BookActionResult(false, "Please supply lending person");
+        }
+
         currentLendings.add(new Lending(result.getBook(), lendingPerson));
 
         return new BookActionResult(true, null);
@@ -63,7 +69,7 @@ public class Library {
     }
 
     public void printAllBooksInformation() {
-        String information = books.stream().map(Book::getBookType).map(bookType -> {
+        String information = books.stream().map(Book::getBookType).distinct().map(bookType -> {
             String info = bookType.toString();
 
             info += System.lineSeparator() + "Total books: " + getAllBooksOfType(bookType);
@@ -108,15 +114,15 @@ public class Library {
         System.out.println(info);
     }
 
-    private Long getAllBooksOfType(BookType bookType) {
+    public Long getAllBooksOfType(BookType bookType) {
         return books.stream().filter(book -> book.getBookType().equals(bookType)).count();
     }
 
-    private Long getAllLentBooksOfType(BookType bookType) {
+    public Long getAllLentBooksOfType(BookType bookType) {
         return currentLendings.stream().filter(lending -> lending.getBook().getBookType().equals(bookType)).count();
     }
 
-    private BookAvailabilityResult isBookAvailable(Integer bookID) {
+    public BookAvailabilityResult isBookAvailable(Integer bookID) {
         Optional<Book> book = books.stream().filter(other -> Objects.equals(other.getID(), bookID))
                 .findFirst();
 
